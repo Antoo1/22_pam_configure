@@ -1,0 +1,7 @@
+- name: PAM | Restrict non admins connect on weekends
+  hosts: pam
+  become: true
+
+  roles:
+    - configure_pam
+
