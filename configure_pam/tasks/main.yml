@@ -1,0 +1,18 @@
+---
+# tasks file for nginx
+- name: copy pam_exec
+  copy:
+    src: configure_pam/templates/login.sh
+    dest: /usr/local/bin/login.sh
+    mode: 0755
+
+- name: include executing script in PAM
+  lineinfile:
+    dest: /etc/pam.d/common-auth
+    line: "auth    required    pam_exec.so /usr/local/bin/login.sh" 
+    insertafter: EOF
+  notify:
+    - restart sshd 
+  tags:
+    - pam configuration
+
